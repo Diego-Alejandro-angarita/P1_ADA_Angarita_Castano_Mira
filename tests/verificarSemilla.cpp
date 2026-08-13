@@ -29,17 +29,14 @@ int main() {
         getline(cin, apellidos[i]);
     }
 
-    // Paso 1: ordenar alfabeticamente
     sort(apellidos.begin(), apellidos.end());
 
-    // Paso 2: concatenar, minusculas, sin espacios ni tildes
     string cadena;
     for (auto& a : apellidos) {
         cadena += aMinusculas(a);
     }
     cout << "\nApellidos ordenados y concatenados: \"" << cadena << "\"\n";
 
-    // Paso 3: suma de codigos byte a byte
     uint64_t suma = 0;
     cout << "\nDesglose byte a byte:\n";
     for (unsigned char c : cadena) {
@@ -47,7 +44,6 @@ int main() {
         cout << "  byte " << (int)c << "  (acumulado: " << suma << ")\n";
     }
 
-    // Paso 4: semilla
     uint64_t semilla = suma % 100000;
     cout << "\nSuma total = " << suma << "\n";
     cout << "Semilla = " << suma << " mod 100000 = " << semilla << "\n";
