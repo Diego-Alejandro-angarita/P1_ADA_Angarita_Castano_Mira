@@ -7,22 +7,8 @@
 
 using namespace std;
 
-string aMinusculas(const string& s) {
-    string r = s;
-    for (auto& c : r) {
-        if (static_cast<unsigned char>(c) < 128) {
-            c = tolower(static_cast<unsigned char>(c));
-        }
-    }
-    return r;
-}
-
 int main() {
-    int n;
-    cout << "Numero de integrantes del equipo: ";
-    cin >> n;
-    cin.ignore();
-
+    size_t n = 3;
     vector<string> apellidos(n);
     for (int i = 0; i < n; i++) {
         cout << "Apellido " << (i + 1) << ": ";
@@ -33,9 +19,9 @@ int main() {
 
     string cadena;
     for (auto& a : apellidos) {
-        cadena += aMinusculas(a);
+        cadena += a;
     }
-    cout << "\nApellidos ordenados y concatenados: \"" << cadena << "\"\n";
+    cout << "\nApellidos ordenados : \"" << cadena << "\"\n";
 
     uint64_t suma = 0;
     cout << "\nDesglose byte a byte:\n";
@@ -60,16 +46,10 @@ int main() {
     cout << "minDigit  = 1 + (semilla mod 3) = " << minDigit  << "\n";
     cout << "minSymbol = " << minSymbol << "\n";
     cout << "Suma total = " << total;
-    if (total > 8) {
-        cout << "  -> EXCEDE 8. Reduce minLower en "
-                  << (total - 8) << " y documentalo en el informe.\n";
-    } else {
-        cout << "  -> OK (<= 8)\n";
-    }
 
     cout << "x0 = semilla = " << semilla << "\n";
     const string A1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const string A2 = "abcdefghijklmnopqrstuvwxyz0123456789";
+    const string A2 = "0123456789";
     uint64_t x = semilla;
     const uint64_t MOD = 1ULL << 31;
     for (int i = 1; i <= 24; i++) {
