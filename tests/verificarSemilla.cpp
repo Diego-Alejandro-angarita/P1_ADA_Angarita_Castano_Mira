@@ -40,7 +40,13 @@ int main() {
     int minSymbol = 1;
     int total = minLower + minUpper + minDigit + minSymbol;
 
-    cout << "\n--- Parametros de politica BT (n=8) ---\n";
+    cout << "\nRequisitos de la contraseña:\n";
+    /* 
+        de 2 a 4 minusculas
+        de 1 a 2 mayusculas
+        de 1 a 3 digitos
+        1 simbolo
+    */
     cout << "minLower  = 2 + (semilla mod 3) = " << minLower  << "\n";
     cout << "minUpper  = 1 + (semilla mod 2) = " << minUpper  << "\n";
     cout << "minDigit  = 1 + (semilla mod 3) = " << minDigit  << "\n";
@@ -49,7 +55,7 @@ int main() {
 
     cout << "x0 = semilla = " << semilla << "\n";
     const string A1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const string A2 = "0123456789";
+    const string A2 = "adcdefghijklmnopqrstuvwxyz0123456789";
     uint64_t x = semilla;
     const uint64_t MOD = 1ULL << 31;
     for (int i = 1; i <= 24; i++) {
