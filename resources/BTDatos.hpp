@@ -1,4 +1,4 @@
-
+#include <cstdint>
 #include <string>
 using namespace std;
 
@@ -9,10 +9,10 @@ const string ALFABETO_BT =
     "!@#$%";
 
 struct PoliticaBT {
-    int minLower;
-    int minUpper;
-    int minDigit;
-    int minSymbol;
+    int minLower = 2;
+    int minUpper = 2;
+    int minDigit = 3;
+    int minSymbol = 1;
     int n;       
-    bool prohibirConsecutivosIdenticos = true;
+    bool prohibirSeguidos = true;
 };

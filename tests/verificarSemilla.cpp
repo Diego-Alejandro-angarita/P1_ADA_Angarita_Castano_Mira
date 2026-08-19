@@ -34,20 +34,14 @@ int main() {
     cout << "\nSuma total = " << suma << "\n";
     cout << "Semilla = " << suma << " mod 100000 = " << semilla << "\n";
 
-    int minLower  = 2 + (semilla % 3);
+    int minLower  = 0 + (semilla % 3);
     int minUpper  = 1 + (semilla % 2);
     int minDigit  = 1 + (semilla % 3);
     int minSymbol = 1;
     int total = minLower + minUpper + minDigit + minSymbol;
 
     cout << "\nRequisitos de la contraseña:\n";
-    /* 
-        de 2 a 4 minusculas
-        de 1 a 2 mayusculas
-        de 1 a 3 digitos
-        1 simbolo
-    */
-    cout << "minLower  = 2 + (semilla mod 3) = " << minLower  << "\n";
+    cout << "minLower  = (semilla mod 3) = " << minLower  << "\n";
     cout << "minUpper  = 1 + (semilla mod 2) = " << minUpper  << "\n";
     cout << "minDigit  = 1 + (semilla mod 3) = " << minDigit  << "\n";
     cout << "minSymbol = " << minSymbol << "\n";
