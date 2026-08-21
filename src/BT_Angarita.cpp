@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <ctime>
 #include "resources/BTDatos.hpp"
 
 using namespace std;
@@ -50,7 +51,6 @@ void backtracking(string& password, int pos,
     }
 }
 
-// --- Driver: prepara y lanza el backtracking para una politica dada ---
 long long generarDiccionario(const PoliticaBT& pol, ofstream& out, long long limite) {
     int minTotal = pol.minLower + pol.minUpper + pol.minDigit + pol.minSymbol;
 
@@ -74,27 +74,36 @@ long long generarDiccionario(const PoliticaBT& pol, ofstream& out, long long lim
 int main() {
     const long long MAX_CADENAS = 1000;   // limite configurable de cadenas por n
 
-    ofstream out("results/Diccionario.txt");   // trunca/crea el archivo
+    ofstream out("results/Diccionario.txt");
     if (!out) {
         cerr << "No se pudo abrir results/Diccionario.txt (ejecuta desde la raiz del proyecto)\n";
         return 1;
     }
 
-    // Longitudes a probar: 8 (minima), 6 (insuficiente), 10 (mayor cantidad)
+    clock_t inicioTotal = clock();   // marca de tiempo global
+
     for (int n : {8, 6, 10}) {
         PoliticaBT pol;
         pol.n = n;
 
-        out << "===== n=" << n << " (limite=" << MAX_CADENAS << ") =====\n";
+        out << n << " (limite=" << MAX_CADENAS << ")\n";
         cout << "Generando para n=" << n << " ...\n";
 
+        clock_t inicio = clock();                          // inicio de esta corrida
         long long escritas = generarDiccionario(pol, out, MAX_CADENAS);
+        clock_t fin = clock();                             // fin de esta corrida
+        double segundos = double(fin - inicio) / CLOCKS_PER_SEC;
 
-        out << "----- n=" << n << ": " << escritas << " cadenas escritas -----\n\n";
-        cout << "  n=" << n << ": " << escritas << " cadenas escritas.\n";
+        out << "n=" << n << ": " << escritas << " cadenas escritas en "
+            << segundos << " s\n";
+        cout << "  n=" << n << ": " << escritas << " cadenas escritas en "
+             << segundos << " s.\n";
     }
 
+    double segundosTotal = double(clock() - inicioTotal) / CLOCKS_PER_SEC;
+
     out.close();
-    cout << "\nListo. Resultados en results/Diccionario.txt\n";
+    cout << "\nTiempo total de ejecucion: " << segundosTotal << " s\n";
+    cout << "Resultados en results/Diccionario.txt\n";
     return 0;
 }

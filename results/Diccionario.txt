@@ -1,4 +1,4 @@
-===== n=8 (limite=1000) =====
+8 (limite=1000)
 abAB010!
 abAB010@
 abAB010#
@@ -999,13 +999,13 @@ abAB0@57
 abAB0@58
 abAB0@59
 abAB0@60
------ n=8: 1000 cadenas escritas -----
+----- n=8: 1000 cadenas escritas en 0.002 s -----
 
-===== n=6 (limite=1000) =====
+6 (limite=1000)
   [longitud n=6 insuficiente: se requieren al menos 8 caracteres (minLower=2, minUpper=2, minDigit=3, minSymbol=1)]
------ n=6: 0 cadenas escritas -----
+----- n=6: 0 cadenas escritas en 0 s -----
 
-===== n=10 (limite=1000) =====
+10 (limite=1000)
 ababAB010!
 ababAB010@
 ababAB010#
@@ -2006,5 +2006,5 @@ ababAB0@57
 ababAB0@58
 ababAB0@59
 ababAB0@60
------ n=10: 1000 cadenas escritas -----
+----- n=10: 1000 cadenas escritas en 0.002 s -----
 
