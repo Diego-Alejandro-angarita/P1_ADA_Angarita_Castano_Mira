@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 #include <ctime>
-#include "resources/BTDatos.hpp"
+#include "BTDatos.hpp"
 
 using namespace std;
 
@@ -51,7 +51,7 @@ void backtracking(string& password, int pos,
     }
 }
 
-long long generarDiccionario(const PoliticaBT& pol, ofstream& out, long long limite) {
+long long generarPassword(const PoliticaBT& pol, ofstream& out, long long limite) {
     int minTotal = pol.minLower + pol.minUpper + pol.minDigit + pol.minSymbol;
 
     // Deteccion temprana: la longitud n no alcanza para los minimos requeridos.
@@ -74,13 +74,13 @@ long long generarDiccionario(const PoliticaBT& pol, ofstream& out, long long lim
 int main() {
     const long long MAX_CADENAS = 1000;   // limite configurable de cadenas por n
 
-    ofstream out("results/Diccionario.txt");
+    ofstream out("results/PasswordsBT.txt");
     if (!out) {
         cerr << "No se pudo abrir results/Diccionario.txt (ejecuta desde la raiz del proyecto)\n";
         return 1;
     }
 
-    clock_t inicioTotal = clock();   // marca de tiempo global
+    clock_t inicioTotal = clock();
 
     for (int n : {8, 6, 10}) {
         PoliticaBT pol;
@@ -90,7 +90,7 @@ int main() {
         cout << "Generando para n=" << n << " ...\n";
 
         clock_t inicio = clock();                          // inicio de esta corrida
-        long long escritas = generarDiccionario(pol, out, MAX_CADENAS);
+        long long escritas = generarPassword(pol, out, MAX_CADENAS);
         clock_t fin = clock();                             // fin de esta corrida
         double segundos = double(fin - inicio) / CLOCKS_PER_SEC;
 
