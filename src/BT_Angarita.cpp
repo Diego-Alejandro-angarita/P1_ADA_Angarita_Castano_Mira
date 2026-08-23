@@ -72,7 +72,7 @@ long long generarPassword(const PoliticaBT& pol, ofstream& out, long long limite
 }
 
 int main() {
-    const long long MAX_CADENAS = 1000;   // limite configurable de cadenas por n
+    const long long MAX_CADENAS = 3500;   // limite configurable de cadenas por n
 
     ofstream out("results/PasswordsBT.txt");
     if (!out) {
