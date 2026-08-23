@@ -57,9 +57,15 @@ bool nextCandidate(std::string& candidate, const std::string& symbols) {
 }
 
 std::string normalizedHash(std::string hash) {
+    if (hash.size() != 64) {
+        throw std::invalid_argument("El hash debe tener 64 caracteres hexadecimales");
+    }
     for (char& character : hash) {
         if (character >= 'A' && character <= 'F') {
             character = static_cast<char>(character - 'A' + 'a');
+        } else if (!((character >= '0' && character <= '9')
+                  || (character >= 'a' && character <= 'f'))) {
+            throw std::invalid_argument("El hash debe tener 64 caracteres hexadecimales");
         }
     }
     return hash;
@@ -190,19 +196,21 @@ SearchResult dictionaryAttack(const std::string& targetHash,
     SearchResult result;
     const auto started = std::chrono::steady_clock::now();
     std::ifstream dictionary(dictionaryPath);
-    if (dictionary) {
-        const std::string expected = normalizedHash(targetHash);
-        std::string candidate;
-        while (std::getline(dictionary, candidate)) {
-            if (!candidate.empty() && candidate.back() == '\r') {
-                candidate.pop_back();
-            }
-            ++result.candidates;
-            if (sha256(candidate) == expected) {
-                result.found = true;
-                result.plaintext = std::move(candidate);
-                break;
-            }
+    if (!dictionary) {
+        throw std::runtime_error("No se pudo abrir el diccionario: " + dictionaryPath);
+    }
+
+    const std::string expected = normalizedHash(targetHash);
+    std::string candidate;
+    while (std::getline(dictionary, candidate)) {
+        if (!candidate.empty() && candidate.back() == '\r') {
+            candidate.pop_back();
+        }
+        ++result.candidates;
+        if (sha256(candidate) == expected) {
+            result.found = true;
+            result.plaintext = std::move(candidate);
+            break;
         }
     }
     const auto elapsed = std::chrono::steady_clock::now() - started;
