@@ -3,8 +3,8 @@
 ## Integrantes
 
 - Emmanuel Castano
-- Luis Miguel Angarita
-- Mira
+- Diego Alejandro Angarita Arboleda
+- Luis Miguel Mira Mejia
 
 Los apellidos normalizados se ordenan alfabéticamente y se concatenan como
 `angaritacastanomira`. La semilla reproducible es `2009`.
