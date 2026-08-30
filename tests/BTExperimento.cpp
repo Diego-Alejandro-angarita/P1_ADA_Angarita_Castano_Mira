@@ -7,8 +7,6 @@
 // Ambas respetan la regla de no-consecutivos, asi que definen el mismo conjunto
 // de soluciones: los conteos deben coincidir.
 //
-// Compilar:  g++ -O2 -o results/BTExperimento.exe tests/BTExperimento.cpp
-// Ejecutar:  results/BTExperimento.exe            (imprime CSV por stdout)
 
 #include <iostream>
 #include <string>

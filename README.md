@@ -27,6 +27,26 @@ g++ -std=c++17 -O2 -Wall -Wextra -pedantic -Isrc src/main.cpp src/fb_password.cp
 El modulo FB se compila de forma independiente para conservar intacto el
 archivo existente de Backtracking.
 
+### Modulo BT (Backtracking)
+
+El modulo BT tiene su propia funcion `main` y se compila de forma
+independiente. Desde la raiz del proyecto, usando C++17:
+
+```powershell
+g++ -std=c++17 -O2 -Wall -Wextra -pedantic -Isrc src/BT_Angarita.cpp -o tests/build/Debug/bt_app.exe
+```
+
+Para generar las contrasenas debe ejecutarse desde la raiz del proyecto,
+ya que escribe la salida en `results/PasswordsBT.txt`:
+
+```powershell
+.\tests\build\Debug\bt_app.exe
+```
+
+El programa recorre los cinco casos de prueba (variando `n` y la politica de
+minimos), imprime el numero de cadenas escritas y el tiempo por caso, y deja el
+resultado completo en `results/PasswordsBT.txt`.
+
 ## Ejecucion
 
 Validacion comun del curso:
