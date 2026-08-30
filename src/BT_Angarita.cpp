@@ -71,32 +71,53 @@ long long generarPassword(const PoliticaBT& pol, ofstream& out, long long limite
     return contador;
 }
 
+// Un caso de prueba = una politica completa mas una etiqueta legible.
+struct CasoBT {
+    const char* etiqueta;   // descripcion corta del caso
+    PoliticaBT  pol;        // politica (n + minimos + bandera de no-consecutivos)
+};
+
 int main() {
-    const long long MAX_CADENAS = 3500;   // limite configurable de cadenas por n
+    const long long MAX_CADENAS = 3500;   // limite configurable de cadenas por caso
+
+    // Las 5 pruebas distintas. minLower, minUpper, minDigit, minSymbol, n, prohibirSeguidos.
+    // Casos 1-3: politica de la semilla (2,2,3,1, no-consecutivos) variando solo n.
+    // Caso 4: solo minLower=1; el resto de politicas NO se aplican (mins 0, sin no-consecutivos).
+    // Caso 5: sin ninguna politica (mins 0, sin no-consecutivos) -> poda nula = fuerza bruta.
+    const CasoBT casos[] = {
+        {"C1 semilla n=8 (2,2,3,1, no-consec)",     {2, 2, 3, 1,  8, true}},
+        {"C2 semilla n=6 (2,2,3,1, no-consec)",     {2, 2, 3, 1,  6, true}},
+        {"C3 semilla n=10 (2,2,3,1, no-consec)",    {2, 2, 3, 1, 10, true}},
+        {"C4 n=8 solo minLower=1 (sin otras pol.)", {1, 0, 0, 0,  8, false}},
+        {"C5 n=6 sin politica (fuerza bruta)",      {0, 0, 0, 0,  6, false}},
+    };
 
     ofstream out("results/PasswordsBT.txt");
     if (!out) {
-        cerr << "No se pudo abrir results/Diccionario.txt (ejecuta desde la raiz del proyecto)\n";
+        cerr << "No se pudo abrir results/PasswordsBT.txt (ejecuta desde la raiz del proyecto)\n";
         return 1;
     }
 
     clock_t inicioTotal = clock();
 
-    for (int n : {8, 6, 10}) {
-        PoliticaBT pol;
-        pol.n = n;
+    for (const CasoBT& caso : casos) {
+        const PoliticaBT& pol = caso.pol;
 
-        out << n << " (limite=" << MAX_CADENAS << ")\n";
-        cout << "Generando para n=" << n << " ...\n";
+        out << caso.etiqueta << " | n=" << pol.n
+            << " minLower=" << pol.minLower << " minUpper=" << pol.minUpper
+            << " minDigit=" << pol.minDigit << " minSymbol=" << pol.minSymbol
+            << " prohibirSeguidos=" << (pol.prohibirSeguidos ? "true" : "false")
+            << " (limite=" << MAX_CADENAS << ")\n";
+        cout << "Generando " << caso.etiqueta << " ...\n";
 
         clock_t inicio = clock();                          // inicio de esta corrida
         long long escritas = generarPassword(pol, out, MAX_CADENAS);
         clock_t fin = clock();                             // fin de esta corrida
         double segundos = double(fin - inicio) / CLOCKS_PER_SEC;
 
-        out << "n=" << n << ": " << escritas << " cadenas escritas en "
+        out << caso.etiqueta << ": " << escritas << " cadenas escritas en "
             << segundos << " s\n";
-        cout << "  n=" << n << ": " << escritas << " cadenas escritas en "
+        cout << "  " << caso.etiqueta << ": " << escritas << " cadenas escritas en "
              << segundos << " s.\n";
     }
 
@@ -104,6 +125,6 @@ int main() {
 
     out.close();
     cout << "\nTiempo total de ejecucion: " << segundosTotal << " s\n";
-    cout << "Resultados en results/Diccionario.txt\n";
+    cout << "Resultados en results/PasswordsBT.txt\n";
     return 0;
 }
